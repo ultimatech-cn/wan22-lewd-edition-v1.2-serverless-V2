@@ -11,4 +11,3 @@ git:https://github.com/yolain/ComfyUI-Easy-Use
 git:https://github.com/pythongosssss/ComfyUI-Custom-Scripts
 git:https://github.com/kijai/ComfyUI-KJNodes
 git:https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
-git:https://github.com/Wan-Video/ComfyUI-Wan-Node
