@@ -6,6 +6,7 @@
 git:https://github.com/rgthree/rgthree-comfy
 git:https://github.com/WASasquatch/was-node-suite-comfyui
 git:https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes
+git:https://github.com/PGCRT/CRT-Nodes
 git:https://github.com/kijai/ComfyUI-GIMM-VFI
 git:https://github.com/yolain/ComfyUI-Easy-Use
 git:https://github.com/pythongosssss/ComfyUI-Custom-Scripts
