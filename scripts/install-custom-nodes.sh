@@ -76,6 +76,7 @@ install_git_repo() {
 
 while IFS= read -r raw_line || [[ -n "${raw_line}" ]]; do
   line="$(trim "${raw_line}")"
+  line="${line#$'\ufeff'}"
 
   if [[ -z "${line}" || "${line}" == \#* ]]; then
     continue
