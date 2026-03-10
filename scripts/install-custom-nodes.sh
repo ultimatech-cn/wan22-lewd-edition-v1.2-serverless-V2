@@ -36,10 +36,29 @@ install_git_repo() {
 
   rm -rf "${repo_name}"
 
+  local clone_cmd=(git clone --depth 1)
   if [[ -n "${branch}" ]]; then
-    git clone --depth 1 --branch "${branch}" "${repo_url}" "${repo_name}"
-  else
-    git clone --depth 1 "${repo_url}" "${repo_name}"
+    clone_cmd+=(--branch "${branch}")
+  fi
+  clone_cmd+=("${repo_url}" "${repo_name}")
+
+  local attempt
+  for attempt in 1 2 3; do
+    echo "install-custom-nodes: clone attempt ${attempt} for ${repo_url}"
+    if "${clone_cmd[@]}"; then
+      break
+    fi
+    rm -rf "${repo_name}"
+    sleep 2
+  done
+
+  if [[ ! -d "${repo_name}" ]]; then
+    echo "install-custom-nodes: shallow clone failed for ${repo_url}, retrying without --depth 1"
+    if [[ -n "${branch}" ]]; then
+      git clone --branch "${branch}" "${repo_url}" "${repo_name}"
+    else
+      git clone "${repo_url}" "${repo_name}"
+    fi
   fi
 
   if [[ -f "${repo_name}/requirements.txt" ]]; then
