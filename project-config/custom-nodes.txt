@@ -1,4 +1,4 @@
-﻿# Auto-generated draft. Review unresolved items before delivery.
+# Auto-generated draft. Review unresolved items before delivery.
 # Supported formats:
 #   registry:<node-name>
 #   git:<repo-url>
