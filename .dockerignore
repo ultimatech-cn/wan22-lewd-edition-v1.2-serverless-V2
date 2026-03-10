@@ -59,8 +59,7 @@ docker-bake.hcl
 # CI/CD
 .github/
 
-# Scripts (if not needed)
-scripts/
+# Scripts are required during image build
 
 # Source files (if handler.py is the only one needed)
 # But we need extra_model_paths.yaml and start.sh for Network Volume support
