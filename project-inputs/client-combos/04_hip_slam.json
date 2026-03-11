@@ -1,0 +1,780 @@
+{
+  "input": {
+    "images": [
+      {
+        "name": "client_input.png",
+        "image": "https://example.com/replace-with-your-input-image.png"
+      }
+    ],
+    "workflow": {
+      "1": {
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        },
+        "class_type": "CLIPLoader",
+        "_meta": {
+          "title": "Load CLIP"
+        }
+      },
+      "2": {
+        "inputs": {
+          "add_noise": "disable",
+          "noise_seed": 0,
+          "steps": 10,
+          "cfg": 1,
+          "sampler_name": "euler",
+          "scheduler": "beta",
+          "start_at_step": 4,
+          "end_at_step": 10000,
+          "return_with_leftover_noise": "disable",
+          "model": [
+            "65",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "10",
+            1
+          ],
+          "latent_image": [
+            "3",
+            0
+          ]
+        },
+        "class_type": "KSamplerAdvanced",
+        "_meta": {
+          "title": "KSampler (Advanced)"
+        }
+      },
+      "3": {
+        "inputs": {
+          "add_noise": "disable",
+          "noise_seed": 0,
+          "steps": 10,
+          "cfg": 1,
+          "sampler_name": "euler",
+          "scheduler": "beta",
+          "start_at_step": 2,
+          "end_at_step": 4,
+          "return_with_leftover_noise": "enable",
+          "model": [
+            "8",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "10",
+            1
+          ],
+          "latent_image": [
+            "40",
+            0
+          ]
+        },
+        "class_type": "KSamplerAdvanced",
+        "_meta": {
+          "title": "KSampler (Advanced)"
+        }
+      },
+      "4": {
+        "inputs": {
+          "samples": [
+            "2",
+            0
+          ],
+          "vae": [
+            "7",
+            0
+          ]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+          "title": "VAE Decode"
+        }
+      },
+      "6": {
+        "inputs": {
+          "text": "鑹茶皟鑹充附锛岃繃鏇濓紝闈欐€侊紝缁嗚妭妯＄硦涓嶆竻锛屽瓧骞曪紝椋庢牸锛屼綔鍝侊紝鐢讳綔锛岀敾闈紝闈欐锛屾暣浣撳彂鐏帮紝鏈€宸川閲忥紝浣庤川閲忥紝JPEG鍘嬬缉娈嬬暀锛屼笐闄嬬殑锛屾畫缂虹殑锛屽浣欑殑鎵嬫寚锛岀敾寰椾笉濂界殑鎵嬮儴锛岀敾寰椾笉濂界殑鑴搁儴锛岀暩褰㈢殑锛屾瘉瀹圭殑锛屽舰鎬佺暩褰㈢殑鑲綋锛屾墜鎸囪瀺鍚堬紝闈欐涓嶅姩鐨勭敾闈紝鏉備贡鐨勮儗鏅紝涓夋潯鑵匡紝鑳屾櫙浜哄緢澶氾紝鍊掔潃璧? slow motion, slow, talking",
+          "clip": [
+            "1",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Negative Prompt)"
+        }
+      },
+      "7": {
+        "inputs": {
+          "vae_name": "wan_2.1_vae.safetensors"
+        },
+        "class_type": "VAELoader",
+        "_meta": {
+          "title": "Load VAE"
+        }
+      },
+      "8": {
+        "inputs": {
+          "shift": 5,
+          "model": [
+            "69",
+            0
+          ]
+        },
+        "class_type": "ModelSamplingSD3",
+        "_meta": {
+          "title": "ModelSamplingSD3"
+        }
+      },
+      "10": {
+        "inputs": {
+          "width": [
+            "59",
+            0
+          ],
+          "height": [
+            "59",
+            1
+          ],
+          "length": 81,
+          "batch_size": 1,
+          "positive": [
+            "13",
+            0
+          ],
+          "negative": [
+            "6",
+            0
+          ],
+          "vae": [
+            "7",
+            0
+          ],
+          "start_image": [
+            "124",
+            0
+          ]
+        },
+        "class_type": "WanImageToVideo",
+        "_meta": {
+          "title": "WanImageToVideo"
+        }
+      },
+      "11": {
+        "inputs": {
+          "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+          "weight_dtype": "fp8_e4m3fn_fast"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "Load Diffusion Model"
+        }
+      },
+      "12": {
+        "inputs": {
+          "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+          "weight_dtype": "fp8_e4m3fn_fast"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "Load Diffusion Model"
+        }
+      },
+      "13": {
+        "inputs": {
+          "text": "The woman is performing an assertive hip-slam style riding motion while looking at the viewer",
+          "clip": [
+            "1",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Positive Prompt)"
+        }
+      },
+      "14": {
+        "inputs": {
+          "image": "client_input.png"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+          "title": "Load Image"
+        }
+      },
+      "16": {
+        "inputs": {
+          "frame_rate": 32,
+          "loop_count": 0,
+          "filename_prefix": "videos\\2026-03-10_WAN_",
+          "format": "video/h264-mp4",
+          "pix_fmt": "yuv420p",
+          "crf": 19,
+          "save_metadata": true,
+          "trim_to_audio": false,
+          "pingpong": false,
+          "save_output": true,
+          "no_preview": false,
+          "images": [
+            "33",
+            0
+          ]
+        },
+        "class_type": "VHS_VideoCombine",
+        "_meta": {
+          "title": "Video Combine 馃帴馃叆馃厳馃參"
+        }
+      },
+      "21": {
+        "inputs": {
+          "sage_attention": "auto",
+          "allow_compile": false,
+          "model": [
+            "8",
+            0
+          ]
+        },
+        "class_type": "PathchSageAttentionKJ",
+        "_meta": {
+          "title": "Patch Sage Attention KJ"
+        }
+      },
+      "33": {
+        "inputs": {
+          "ds_factor": 1,
+          "interpolation_factor": 2,
+          "seed": 480593432630407,
+          "gimmvfi_model": [
+            "34",
+            0
+          ],
+          "images": [
+            "127",
+            0
+          ]
+        },
+        "class_type": "GIMMVFI_interpolate",
+        "_meta": {
+          "title": "GIMM-VFI Interpolate"
+        }
+      },
+      "34": {
+        "inputs": {
+          "model": "gimmvfi_r_arb_lpips_fp32.safetensors"
+        },
+        "class_type": "DownloadAndLoadGIMMVFIModel",
+        "_meta": {
+          "title": "(Down)Load GIMMVFI Model"
+        }
+      },
+      "40": {
+        "inputs": {
+          "add_noise": "enable",
+          "noise_seed": 23500310692231,
+          "steps": 10,
+          "cfg": 3.5,
+          "sampler_name": "euler",
+          "scheduler": "beta",
+          "start_at_step": 0,
+          "end_at_step": 2,
+          "return_with_leftover_noise": "enable",
+          "model": [
+            "54",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "10",
+            1
+          ],
+          "latent_image": [
+            "10",
+            2
+          ]
+        },
+        "class_type": "KSamplerAdvanced",
+        "_meta": {
+          "title": "KSampler (Advanced)"
+        }
+      },
+      "48": {
+        "inputs": {
+          "images": [
+            "127",
+            0
+          ]
+        },
+        "class_type": "CRTFirstLastFrameSelector",
+        "_meta": {
+          "title": "Get First & Last Frame (CRT)"
+        }
+      },
+      "53": {
+        "inputs": {
+          "sage_attention": "auto",
+          "allow_compile": false,
+          "model": [
+            "54",
+            0
+          ]
+        },
+        "class_type": "PathchSageAttentionKJ",
+        "_meta": {
+          "title": "Patch Sage Attention KJ"
+        }
+      },
+      "54": {
+        "inputs": {
+          "shift": 5,
+          "model": [
+            "81",
+            0
+          ]
+        },
+        "class_type": "ModelSamplingSD3",
+        "_meta": {
+          "title": "ModelSamplingSD3"
+        }
+      },
+      "59": {
+        "inputs": {
+          "longer_side": 1280,
+          "aspect_ratio": "9:16 (Portrait)",
+          "divisible_by": 8
+        },
+        "class_type": "Resolution",
+        "_meta": {
+          "title": "Resolution (CRT)"
+        }
+      },
+      "63": {
+        "inputs": {
+          "lora_name": "WAN/Wan_2_2_I2V_A14B_HIGH_lightx2v_MoE_distill_lora_rank_64_bf16.safetensors",
+          "strength_model": 1,
+          "model": [
+            "11",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "64": {
+        "inputs": {
+          "lora_name": "WAN/v2 low_noise_model_rank64.safetensors",
+          "strength_model": 1,
+          "model": [
+            "96",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "65": {
+        "inputs": {
+          "shift": 5,
+          "model": [
+            "71",
+            0
+          ]
+        },
+        "class_type": "ModelSamplingSD3",
+        "_meta": {
+          "title": "ModelSamplingSD3"
+        }
+      },
+      "66": {
+        "inputs": {
+          "sage_attention": "auto",
+          "allow_compile": false,
+          "model": [
+            "65",
+            0
+          ]
+        },
+        "class_type": "PathchSageAttentionKJ",
+        "_meta": {
+          "title": "Patch Sage Attention KJ"
+        }
+      },
+      "68": {
+        "inputs": {
+          "lora_name": "WAN/BounceHighWan2_2.safetensors",
+          "strength_model": 0,
+          "model": [
+            "73",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "69": {
+        "inputs": {
+          "lora_name": "WAN/slop_twerk_HighNoise_merged3_7_v2.safetensors",
+          "strength_model": 0,
+          "model": [
+            "68",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "70": {
+        "inputs": {
+          "lora_name": "WAN/BounceLowWan2_2.safetensors",
+          "strength_model": 0,
+          "model": [
+            "74",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "71": {
+        "inputs": {
+          "lora_name": "WAN/slop_twerk_LowNoise_merged3_7_v2.safetensors",
+          "strength_model": 0,
+          "model": [
+            "70",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "73": {
+        "inputs": {
+          "lora_name": "WAN/Wan22-I2V-HIGH-Hip_Slammin_Assertive_Cowgirl.safetensors",
+          "strength_model": 1,
+          "model": [
+            "98",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "74": {
+        "inputs": {
+          "lora_name": "WAN/Wan22-I2V-LOW-Hip_Slammin_Assertive_Cowgirl.safetensors",
+          "strength_model": 1,
+          "model": [
+            "99",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "75": {
+        "inputs": {
+          "lora_name": "WAN/DR34ML4Y_I2V_14B_HIGH.safetensors",
+          "strength_model": 0,
+          "model": [
+            "63",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "76": {
+        "inputs": {
+          "lora_name": "WAN/DR34ML4Y_I2V_14B_LOW.safetensors",
+          "strength_model": 0,
+          "model": [
+            "64",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "78": {
+        "inputs": {
+          "lora_name": "WAN/DR34ML4Y_I2V_14B_HIGH.safetensors",
+          "strength_model": 0,
+          "model": [
+            "11",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "79": {
+        "inputs": {
+          "lora_name": "WAN/Wan22-I2V-HIGH-Hip_Slammin_Assertive_Cowgirl.safetensors",
+          "strength_model": 1,
+          "model": [
+            "97",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "80": {
+        "inputs": {
+          "lora_name": "WAN/BounceHighWan2_2.safetensors",
+          "strength_model": 0,
+          "model": [
+            "79",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "81": {
+        "inputs": {
+          "lora_name": "WAN/slop_twerk_HighNoise_merged3_7_v2.safetensors",
+          "strength_model": 0,
+          "model": [
+            "80",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "83": {
+        "inputs": {
+          "images": [
+            "95",
+            0
+          ]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+          "title": "Last Frame"
+        }
+      },
+      "95": {
+        "inputs": {
+          "anything": [
+            "48",
+            1
+          ]
+        },
+        "class_type": "easy cleanGpuUsed",
+        "_meta": {
+          "title": "Clean VRAM Used"
+        }
+      },
+      "96": {
+        "inputs": {
+          "anything": [
+            "12",
+            0
+          ]
+        },
+        "class_type": "easy cleanGpuUsed",
+        "_meta": {
+          "title": "Clean VRAM Used"
+        }
+      },
+      "97": {
+        "inputs": {
+          "lora_name": "WAN/wan22-ultimatedeepthroat-I2V-34epoc-high-k3nk.safetensors",
+          "strength_model": 0,
+          "model": [
+            "138",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "98": {
+        "inputs": {
+          "lora_name": "WAN/wan22-ultimatedeepthroat-I2V-34epoc-high-k3nk.safetensors",
+          "strength_model": 0,
+          "model": [
+            "139",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "99": {
+        "inputs": {
+          "lora_name": "WAN/wan22-ultimatedeepthroat-I2V-101epoc-low-k3nk.safetensors",
+          "strength_model": 0,
+          "model": [
+            "140",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "124": {
+        "inputs": {
+          "any_02": [
+            "14",
+            0
+          ]
+        },
+        "class_type": "Any Switch (rgthree)",
+        "_meta": {
+          "title": "Any Switch (rgthree)"
+        }
+      },
+      "127": {
+        "inputs": {
+          "method": "mkl",
+          "strength": 1,
+          "multithread": true,
+          "image_ref": [
+            "14",
+            0
+          ],
+          "image_target": [
+            "4",
+            0
+          ]
+        },
+        "class_type": "ColorMatch",
+        "_meta": {
+          "title": "Color Match"
+        }
+      },
+      "135": {
+        "inputs": {
+          "lora_name": "WAN/wan_fingering_pussy_i2v2.2hi_v10.safetensors",
+          "strength_model": 0,
+          "model": [
+            "78",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "136": {
+        "inputs": {
+          "lora_name": "WAN/wan_fingering_pussy_i2v2.2hi_v10.safetensors",
+          "strength_model": 0,
+          "model": [
+            "75",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "137": {
+        "inputs": {
+          "lora_name": "WAN/wan_fingering_pussy_i2v2.2lo_v10.safetensors",
+          "strength_model": 0,
+          "model": [
+            "76",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "138": {
+        "inputs": {
+          "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - HIGH 14B.safetensors",
+          "strength_model": 0,
+          "model": [
+            "135",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "139": {
+        "inputs": {
+          "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - HIGH 14B.safetensors",
+          "strength_model": 0,
+          "model": [
+            "136",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      },
+      "140": {
+        "inputs": {
+          "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - LOW 14B.safetensors",
+          "strength_model": 0,
+          "model": [
+            "137",
+            0
+          ]
+        },
+        "class_type": "LoraLoaderModelOnly",
+        "_meta": {
+          "title": "Load LoRA"
+        }
+      }
+    }
+  }
+}
