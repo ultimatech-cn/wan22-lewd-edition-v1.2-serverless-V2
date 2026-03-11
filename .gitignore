@@ -3,3 +3,13 @@ __pycache__/
 .specstory/
 .tmp/
 .tmp_pdf_tools/
+logs/
+output/
+REF/ComfyUI Workflow on RunPod Serverless_ Developer Guide.pdf
+REF/ComfyUI Workflow on RunPod Serverless_ Developer Guide.md
+REF/Dockerfile
+REF/handler.py
+project-inputs/Realistic(Video)_API.json
+project-inputs/WAN 2.2 Lewd Edition v1.2_api (1).json
+project-inputs/WAN 2.2 Lewd Edition v1.2_runsync.json
+project-inputs/handler-test-input.json
