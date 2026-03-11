@@ -14,9 +14,17 @@ OUT_DIR = ROOT / "project-inputs" / "client-combos"
 
 PLACEHOLDER_IMAGE_URL = "https://example.com/replace-with-your-input-image.png"
 PLACEHOLDER_IMAGE_NAME = "client_input.png"
+NEGATIVE_PROMPT = (
+    "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，"
+    "最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，"
+    "画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，"
+    "杂乱的背景，三条腿，背景人很多，倒着走, slow motion, slow, talking"
+)
 
 # Positive prompt node in the current workflow
 PROMPT_NODE_ID = "13"
+# Negative prompt node in the current workflow
+NEGATIVE_PROMPT_NODE_ID = "6"
 # LoadImage node in the current workflow
 LOAD_IMAGE_NODE_ID = "14"
 
@@ -125,6 +133,7 @@ def customize_payload(base_payload: dict, scenario: dict) -> dict:
     ]
 
     workflow[PROMPT_NODE_ID]["inputs"]["text"] = scenario["prompt"]
+    workflow[NEGATIVE_PROMPT_NODE_ID]["inputs"]["text"] = NEGATIVE_PROMPT
     workflow[LOAD_IMAGE_NODE_ID]["inputs"]["image"] = PLACEHOLDER_IMAGE_NAME
     set_enabled_groups(workflow, scenario["groups"])
     return payload
