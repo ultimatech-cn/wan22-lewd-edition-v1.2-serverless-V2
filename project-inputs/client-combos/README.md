@@ -18,6 +18,7 @@ Before sending any payload:
 | `06_fingering.json` | `fingering` | Fingering stack only. |
 | `07_gyrating_hips.json` | `gyrating_hips` | Gyrating Hips stack only. |
 | `08_full_current_stack.json` | `general_nsfw, boob_butt_jiggle, hip_slam, deepthroat, fingering, gyrating_hips` | Matches the current full feature stack for broad smoke testing. |
+| `09_face_locked_zoomout_safe.json` | `core_lightning_only` | Safe face-lock and zoom-out workflow using only the core Lightning LoRAs. |
 
 Core LoRAs that remain enabled in all payloads:
 

@@ -191,7 +191,7 @@
       },
       "13": {
         "inputs": {
-          "text": "The woman is doing a happy playful dance while looking at the viewer",
+          "text": "4.8s seamless POV loop. Starts as the exact reference headshot of the woman, face perfectly locked, warm eager eye contact. 0.0-0.9s: smooth cinematic zoom-out into a softly lit bedroom. 0.9-1.5s: outfit transitions quickly into elegant minimal sleepwear with natural cloth motion. 1.5-4.8s: full body woman kneeling on the floor in front of the viewer, gentle body sway, natural breathing, soft shoulder and hair motion, affectionate upward gaze, subtle smile, photoreal 8k, perfect face likeness, clean motion, stable anatomy, realistic skin texture.",
           "clip": [
             "1",
             0
@@ -417,7 +417,7 @@
       "68": {
         "inputs": {
           "lora_name": "WAN/BounceHighWan2_2.safetensors",
-          "strength_model": 0.3,
+          "strength_model": 0,
           "model": [
             "73",
             0
@@ -431,7 +431,7 @@
       "69": {
         "inputs": {
           "lora_name": "WAN/slop_twerk_HighNoise_merged3_7_v2.safetensors",
-          "strength_model": 0.2,
+          "strength_model": 0,
           "model": [
             "68",
             0
@@ -445,7 +445,7 @@
       "70": {
         "inputs": {
           "lora_name": "WAN/BounceLowWan2_2.safetensors",
-          "strength_model": 0.5,
+          "strength_model": 0,
           "model": [
             "74",
             0
@@ -459,7 +459,7 @@
       "71": {
         "inputs": {
           "lora_name": "WAN/slop_twerk_LowNoise_merged3_7_v2.safetensors",
-          "strength_model": 0.3,
+          "strength_model": 0,
           "model": [
             "70",
             0
@@ -473,7 +473,7 @@
       "73": {
         "inputs": {
           "lora_name": "WAN/Wan22-I2V-HIGH-Hip_Slammin_Assertive_Cowgirl.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "98",
             0
@@ -487,7 +487,7 @@
       "74": {
         "inputs": {
           "lora_name": "WAN/Wan22-I2V-LOW-Hip_Slammin_Assertive_Cowgirl.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "99",
             0
@@ -501,7 +501,7 @@
       "75": {
         "inputs": {
           "lora_name": "WAN/DR34ML4Y_I2V_14B_HIGH.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "63",
             0
@@ -515,7 +515,7 @@
       "76": {
         "inputs": {
           "lora_name": "WAN/DR34ML4Y_I2V_14B_LOW.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "64",
             0
@@ -529,7 +529,7 @@
       "78": {
         "inputs": {
           "lora_name": "WAN/DR34ML4Y_I2V_14B_HIGH.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "11",
             0
@@ -543,7 +543,7 @@
       "79": {
         "inputs": {
           "lora_name": "WAN/Wan22-I2V-HIGH-Hip_Slammin_Assertive_Cowgirl.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "97",
             0
@@ -557,7 +557,7 @@
       "80": {
         "inputs": {
           "lora_name": "WAN/BounceHighWan2_2.safetensors",
-          "strength_model": 0.3,
+          "strength_model": 0,
           "model": [
             "79",
             0
@@ -571,7 +571,7 @@
       "81": {
         "inputs": {
           "lora_name": "WAN/slop_twerk_HighNoise_merged3_7_v2.safetensors",
-          "strength_model": 0.2,
+          "strength_model": 0,
           "model": [
             "80",
             0
@@ -621,7 +621,7 @@
       "97": {
         "inputs": {
           "lora_name": "WAN/wan22-ultimatedeepthroat-I2V-34epoc-high-k3nk.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "138",
             0
@@ -635,7 +635,7 @@
       "98": {
         "inputs": {
           "lora_name": "WAN/wan22-ultimatedeepthroat-I2V-34epoc-high-k3nk.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "139",
             0
@@ -649,7 +649,7 @@
       "99": {
         "inputs": {
           "lora_name": "WAN/wan22-ultimatedeepthroat-I2V-101epoc-low-k3nk.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "140",
             0
@@ -694,7 +694,7 @@
       "135": {
         "inputs": {
           "lora_name": "WAN/wan_fingering_pussy_i2v2.2hi_v10.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "78",
             0
@@ -708,7 +708,7 @@
       "136": {
         "inputs": {
           "lora_name": "WAN/wan_fingering_pussy_i2v2.2hi_v10.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "75",
             0
@@ -722,7 +722,7 @@
       "137": {
         "inputs": {
           "lora_name": "WAN/wan_fingering_pussy_i2v2.2lo_v10.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "76",
             0
@@ -736,7 +736,7 @@
       "138": {
         "inputs": {
           "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - HIGH 14B.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "135",
             0
@@ -750,7 +750,7 @@
       "139": {
         "inputs": {
           "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - HIGH 14B.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "136",
             0
@@ -764,7 +764,7 @@
       "140": {
         "inputs": {
           "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - LOW 14B.safetensors",
-          "strength_model": 1,
+          "strength_model": 0,
           "model": [
             "137",
             0

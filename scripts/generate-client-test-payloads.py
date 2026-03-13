@@ -15,10 +15,11 @@ OUT_DIR = ROOT / "project-inputs" / "client-combos"
 PLACEHOLDER_IMAGE_URL = "https://example.com/replace-with-your-input-image.png"
 PLACEHOLDER_IMAGE_NAME = "client_input.png"
 NEGATIVE_PROMPT = (
-    "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，"
-    "最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，"
-    "画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，"
-    "杂乱的背景，三条腿，背景人很多，倒着走, slow motion, slow, talking"
+    "low quality, worst quality, blurry details, jpeg artifacts, bad anatomy, "
+    "deformed body, deformed face, bad hands, extra fingers, fused fingers, "
+    "extra limbs, duplicate body parts, face drift, identity change, static frame, "
+    "stiff motion, frame jitter, camera shake, cluttered background, crowd, "
+    "upside down motion, slow motion, slow, talking"
 )
 
 # Positive prompt node in the current workflow
@@ -86,6 +87,20 @@ SCENARIOS = [
         "prompt": "The woman is doing a happy playful dance while looking at the viewer",
         "groups": list(GROUPS.keys()),
         "notes": "Matches the current full feature stack for broad smoke testing.",
+    },
+    {
+        "slug": "09_face_locked_zoomout_safe",
+        "prompt": (
+            "4.8s seamless POV loop. Starts as the exact reference headshot of the woman, "
+            "face perfectly locked, warm eager eye contact. 0.0-0.9s: smooth cinematic "
+            "zoom-out into a softly lit bedroom. 0.9-1.5s: outfit transitions quickly into "
+            "elegant minimal sleepwear with natural cloth motion. 1.5-4.8s: full body woman "
+            "kneeling on the floor in front of the viewer, gentle body sway, natural breathing, "
+            "soft shoulder and hair motion, affectionate upward gaze, subtle smile, photoreal 8k, "
+            "perfect face likeness, clean motion, stable anatomy, realistic skin texture."
+        ),
+        "groups": [],
+        "notes": "Safe face-lock and zoom-out workflow using only the core Lightning LoRAs.",
     },
 ]
 
