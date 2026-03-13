@@ -28,19 +28,61 @@ export NUMBA_DEBUG_BACKEND=0
 # Suppress all numba print statements by redirecting to /dev/null if needed
 # Note: This is handled in Python code via logging configuration
 
+# Detect the effective models root on the mounted volume.
+# Supports:
+# - explicit override via RUNPOD_MODELS_PATH / MODELS_VOLUME_PATH
+# - current standard locations
+# - shallow auto-discovery for pre-populated customer volumes
+detect_volume_models_path() {
+    local override_path=""
+    local candidate=""
+
+    override_path="${RUNPOD_MODELS_PATH:-${MODELS_VOLUME_PATH:-}}"
+    if [ -n "$override_path" ]; then
+        if [ -d "$override_path" ]; then
+            echo "$override_path"
+            return 0
+        fi
+        echo "worker-comfyui: WARNING: override models path does not exist: $override_path" >&2
+    fi
+
+    for candidate in \
+        "/runpod-volume/storage/models" \
+        "/runpod-volume/models" \
+        "/runpod-volume/storage/ComfyUI/models" \
+        "/runpod-volume/ComfyUI/models"
+    do
+        if [ -d "$candidate" ]; then
+            echo "$candidate"
+            return 0
+        fi
+    done
+
+    if [ -d "/runpod-volume" ]; then
+        candidate="$(find /runpod-volume -maxdepth 4 -type d \( -name models -o -name Models \) \
+            \( -exec test -d '{}/checkpoints' ';' -o -exec test -d '{}/loras' ';' -o -exec test -d '{}/unet' ';' \) \
+            | head -n 1)"
+        if [ -n "$candidate" ]; then
+            echo "$candidate"
+            return 0
+        fi
+    fi
+
+    return 1
+}
+
+VOLUME_MODELS_PATH="$(detect_volume_models_path || true)"
+
 # Set Hugging Face cache directory for BLIP and other transformers models
-# Priority: Network Volume > Image default path
+# Priority: detected Network Volume models root > image default path
 # transformers library stores models in cache_dir/models--Salesforce--blip-vqa-base/ structure
-# We need to set both HF_HUB_CACHE and TRANSFORMERS_CACHE to the same directory
-if [ -d "/runpod-volume/models/blip" ]; then
-    # Use Network Volume if available (preferred for persistence and sharing)
-    export HF_HUB_CACHE="/runpod-volume/models/blip"
-    export TRANSFORMERS_CACHE="/runpod-volume/models/blip"
-    export HF_HOME="/runpod-volume/models/blip"
-    export HUGGINGFACE_HUB_CACHE="/runpod-volume/models/blip"
-    echo "worker-comfyui: Using Network Volume for BLIP models: /runpod-volume/models/blip"
+if [ -n "$VOLUME_MODELS_PATH" ] && [ -d "${VOLUME_MODELS_PATH}/blip" ]; then
+    export HF_HUB_CACHE="${VOLUME_MODELS_PATH}/blip"
+    export TRANSFORMERS_CACHE="${VOLUME_MODELS_PATH}/blip"
+    export HF_HOME="${VOLUME_MODELS_PATH}/blip"
+    export HUGGINGFACE_HUB_CACHE="${VOLUME_MODELS_PATH}/blip"
+    echo "worker-comfyui: Using Network Volume for BLIP models: ${VOLUME_MODELS_PATH}/blip"
 elif [ -d "/comfyui/models/blip" ]; then
-    # Fallback to image default path if Network Volume doesn't have BLIP models
     export HF_HUB_CACHE="/comfyui/models/blip"
     export TRANSFORMERS_CACHE="/comfyui/models/blip"
     export HF_HOME="/comfyui/models/blip"
@@ -68,17 +110,10 @@ echo "worker-comfyui: Checking Network Volume mount..."
 if [ -d "/runpod-volume" ]; then
     echo "worker-comfyui: /runpod-volume exists"
     
-    # Detect the actual models directory on the volume
-    # Priority: /runpod-volume/storage/models > /runpod-volume/models
-    if [ -d "/runpod-volume/storage/models" ]; then
-        VOLUME_MODELS_PATH="/runpod-volume/storage/models"
-        echo "worker-comfyui: Detected models in storage subdirectory: ${VOLUME_MODELS_PATH}"
-    elif [ -d "/runpod-volume/models" ]; then
-        VOLUME_MODELS_PATH="/runpod-volume/models"
-        echo "worker-comfyui: Detected models in root directory: ${VOLUME_MODELS_PATH}"
+    if [ -n "$VOLUME_MODELS_PATH" ]; then
+        echo "worker-comfyui: Detected models directory: ${VOLUME_MODELS_PATH}"
     else
-        VOLUME_MODELS_PATH=""
-        echo "worker-comfyui: WARNING: No 'models' or 'storage/models' directory found on /runpod-volume"
+        echo "worker-comfyui: WARNING: Could not detect a usable models directory under /runpod-volume"
     fi
     
     ls -la /runpod-volume/ | head -5 || echo "worker-comfyui: Cannot list /runpod-volume"
