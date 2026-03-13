@@ -62,7 +62,10 @@ runpod-serverless-template/
 默认推荐：
 
 - 自定义节点装进镜像
-- 模型下载到 `/runpod-volume/models`
+- 模型下载优先放到挂载卷的 `models` 目录
+- 常见路径：
+  - 临时 Pod: `/workspace/models`
+  - Serverless Endpoint: `/runpod-volume/models`
 
 这样更适合 RunPod Serverless 的长期维护。
 

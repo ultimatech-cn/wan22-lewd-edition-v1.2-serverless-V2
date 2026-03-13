@@ -21,6 +21,12 @@ if [[ ! -d "${volume_root}" ]]; then
   exit 1
 fi
 
+if [[ -d "${fail_log_path}" ]]; then
+  fail_log_path="${fail_log_path%/}/download-models-failed.txt"
+fi
+
+mkdir -p "$(dirname "${fail_log_path}")"
+
 if [[ -d "${volume_root}/storage" ]]; then
   models_root="${volume_root}/storage/models"
   echo "download-models-to-volume: detected storage mount, using ${models_root}"

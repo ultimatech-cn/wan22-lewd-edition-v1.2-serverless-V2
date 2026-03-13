@@ -13,6 +13,7 @@
 - 参数 1：`VOLUME_ROOT`（默认 `/runpod-volume`）
 - 参数 2：`manifest`（默认 `project-config/model-manifest.txt`）
 - 参数 3：`fail_log`（默认 `/tmp/download-models-failed.txt`）
+- 参数 3 也可以直接传目录，例如 `/tmp/`，脚本会自动落到 `/tmp/download-models-failed.txt`
 
 目录自动识别：
 
@@ -27,6 +28,9 @@ bash scripts/download-models-to-volume.sh /runpod-volume project-config/model-ma
 
 ```bash
 bash scripts/download-models-to-volume.sh /workspace project-config/model-manifest.txt /tmp/download-models-failed.txt
+
+# Directory is also accepted for the failure log argument
+bash scripts/download-models-to-volume.sh /workspace project-config/model-manifest.txt /tmp/
 ```
 
 ## 失败处理

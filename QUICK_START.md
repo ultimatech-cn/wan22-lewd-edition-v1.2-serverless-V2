@@ -33,7 +33,10 @@ docker-compose up
 如果本地或临时 Pod 已挂载 Volume：
 
 ```bash
-bash scripts/download-models-to-volume.sh /runpod-volume project-config/model-manifest.txt
+bash scripts/download-models-to-volume.sh /runpod-volume project-config/model-manifest.txt /tmp/download-models-failed.txt
+
+# If your temporary Pod exposes the mounted volume at /workspace instead:
+bash scripts/download-models-to-volume.sh /workspace project-config/model-manifest.txt /tmp/download-models-failed.txt
 ```
 
 ## 5. 部署前最少检查
