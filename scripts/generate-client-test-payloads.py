@@ -28,6 +28,9 @@ PROMPT_NODE_ID = "13"
 NEGATIVE_PROMPT_NODE_ID = "6"
 # LoadImage node in the current workflow
 LOAD_IMAGE_NODE_ID = "14"
+TITLE_FIXUPS = {
+    "Video Combine 馃帴馃叆馃厳馃參": "Video Combine",
+}
 
 CORE_LORA_NODE_IDS = {"63", "64"}
 GROUPS = {
@@ -136,6 +139,18 @@ def set_enabled_groups(workflow: dict, enabled_groups: list[str]) -> None:
         inputs["strength_model"] = 0
 
 
+def normalize_meta_titles(workflow: dict) -> None:
+    for node in workflow.values():
+        if not isinstance(node, dict):
+            continue
+        meta = node.get("_meta")
+        if not isinstance(meta, dict):
+            continue
+        title = meta.get("title")
+        if isinstance(title, str) and title in TITLE_FIXUPS:
+            meta["title"] = TITLE_FIXUPS[title]
+
+
 def customize_payload(base_payload: dict, scenario: dict) -> dict:
     payload = deepcopy(base_payload)
     workflow = payload["input"]["workflow"]
@@ -150,6 +165,7 @@ def customize_payload(base_payload: dict, scenario: dict) -> dict:
     workflow[PROMPT_NODE_ID]["inputs"]["text"] = scenario["prompt"]
     workflow[NEGATIVE_PROMPT_NODE_ID]["inputs"]["text"] = NEGATIVE_PROMPT
     workflow[LOAD_IMAGE_NODE_ID]["inputs"]["image"] = PLACEHOLDER_IMAGE_NAME
+    normalize_meta_titles(workflow)
     set_enabled_groups(workflow, scenario["groups"])
     return payload
 
