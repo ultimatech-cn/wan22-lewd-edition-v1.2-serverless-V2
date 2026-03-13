@@ -28,14 +28,16 @@ export NUMBA_DEBUG_BACKEND=0
 # Suppress all numba print statements by redirecting to /dev/null if needed
 # Note: This is handled in Python code via logging configuration
 
-# Detect the effective models root on the mounted volume.
+# Detect the effective models root.
 # Supports:
 # - explicit override via RUNPOD_MODELS_PATH / MODELS_VOLUME_PATH
 # - current standard locations
-# - shallow auto-discovery for pre-populated customer volumes
+# - customer-preloaded models under /workspace
+# - shallow auto-discovery for pre-populated customer volumes/workspaces
 detect_volume_models_path() {
     local override_path=""
     local candidate=""
+    local search_root=""
 
     override_path="${RUNPOD_MODELS_PATH:-${MODELS_VOLUME_PATH:-}}"
     if [ -n "$override_path" ]; then
@@ -50,7 +52,10 @@ detect_volume_models_path() {
         "/runpod-volume/storage/models" \
         "/runpod-volume/models" \
         "/runpod-volume/storage/ComfyUI/models" \
-        "/runpod-volume/ComfyUI/models"
+        "/runpod-volume/ComfyUI/models" \
+        "/workspace/runpod-slim/ComfyUI/models" \
+        "/workspace/ComfyUI/models" \
+        "/workspace/models"
     do
         if [ -d "$candidate" ]; then
             echo "$candidate"
@@ -58,15 +63,19 @@ detect_volume_models_path() {
         fi
     done
 
-    if [ -d "/runpod-volume" ]; then
-        candidate="$(find /runpod-volume -maxdepth 4 -type d \( -name models -o -name Models \) \
+    for search_root in /runpod-volume /workspace; do
+        if [ ! -d "$search_root" ]; then
+            continue
+        fi
+
+        candidate="$(find "$search_root" -maxdepth 5 -type d \( -name models -o -name Models \) \
             \( -exec test -d '{}/checkpoints' ';' -o -exec test -d '{}/loras' ';' -o -exec test -d '{}/unet' ';' \) \
             | head -n 1)"
         if [ -n "$candidate" ]; then
             echo "$candidate"
             return 0
         fi
-    fi
+    done
 
     return 1
 }
