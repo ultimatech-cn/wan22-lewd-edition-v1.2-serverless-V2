@@ -8,17 +8,26 @@ Before sending any payload:
 2. If needed, replace `input.images[0].name` and keep the same filename in workflow node `14`.
 3. Replace the prompt in node `13` if you want a different scene description.
 
-| File | Enabled feature groups | Notes |
-| --- | --- | --- |
-| `01_base_lightning_only.json` | `core_lightning_only` | Base test with only the core Lightning LoRAs enabled. |
-| `02_general_nsfw.json` | `general_nsfw` | General NSFW stack only. |
-| `03_bounce_and_twerk.json` | `boob_butt_jiggle` | Bounce plus twerk stack only. |
-| `04_hip_slam.json` | `hip_slam` | Hip Slam stack only. |
-| `05_deepthroat.json` | `deepthroat` | Deepthroat stack only. |
-| `06_fingering.json` | `fingering` | Fingering stack only. |
-| `07_gyrating_hips.json` | `gyrating_hips` | Gyrating Hips stack only. |
-| `08_full_current_stack.json` | `general_nsfw, boob_butt_jiggle, hip_slam, deepthroat, fingering, gyrating_hips` | Matches the current full feature stack for broad smoke testing. |
-| `09_face_locked_zoomout_safe.json` | `core_lightning_only` | Safe face-lock and zoom-out workflow using only the core Lightning LoRAs. |
+| File | Output | Enabled feature groups | Notes |
+| --- | --- | --- | --- |
+| `01_base_lightning_only_video.json` | `video` | `core_lightning_only` | Base test with only the core Lightning LoRAs enabled. H.264 MP4 output. |
+| `01_base_lightning_only_gif.json` | `gif` | `core_lightning_only` | Base test with only the core Lightning LoRAs enabled. GIF output. |
+| `02_general_nsfw_video.json` | `video` | `general_nsfw` | General NSFW stack only. H.264 MP4 output. |
+| `02_general_nsfw_gif.json` | `gif` | `general_nsfw` | General NSFW stack only. GIF output. |
+| `03_bounce_and_twerk_video.json` | `video` | `boob_butt_jiggle` | Bounce plus twerk stack only. H.264 MP4 output. |
+| `03_bounce_and_twerk_gif.json` | `gif` | `boob_butt_jiggle` | Bounce plus twerk stack only. GIF output. |
+| `04_hip_slam_video.json` | `video` | `hip_slam` | Hip Slam stack only. H.264 MP4 output. |
+| `04_hip_slam_gif.json` | `gif` | `hip_slam` | Hip Slam stack only. GIF output. |
+| `05_deepthroat_video.json` | `video` | `deepthroat` | Deepthroat stack only. H.264 MP4 output. |
+| `05_deepthroat_gif.json` | `gif` | `deepthroat` | Deepthroat stack only. GIF output. |
+| `06_fingering_video.json` | `video` | `fingering` | Fingering stack only. H.264 MP4 output. |
+| `06_fingering_gif.json` | `gif` | `fingering` | Fingering stack only. GIF output. |
+| `07_gyrating_hips_video.json` | `video` | `gyrating_hips` | Gyrating Hips stack only. H.264 MP4 output. |
+| `07_gyrating_hips_gif.json` | `gif` | `gyrating_hips` | Gyrating Hips stack only. GIF output. |
+| `08_full_current_stack_video.json` | `video` | `general_nsfw, boob_butt_jiggle, hip_slam, deepthroat, fingering, gyrating_hips` | Matches the current full feature stack for broad smoke testing. H.264 MP4 output. |
+| `08_full_current_stack_gif.json` | `gif` | `general_nsfw, boob_butt_jiggle, hip_slam, deepthroat, fingering, gyrating_hips` | Matches the current full feature stack for broad smoke testing. GIF output. |
+| `09_face_locked_zoomout_safe_video.json` | `video` | `core_lightning_only` | Safe face-lock and zoom-out workflow using only the core Lightning LoRAs. H.264 MP4 output. |
+| `09_face_locked_zoomout_safe_gif.json` | `gif` | `core_lightning_only` | Safe face-lock and zoom-out workflow using only the core Lightning LoRAs. GIF output. |
 
 Core LoRAs that remain enabled in all payloads:
 

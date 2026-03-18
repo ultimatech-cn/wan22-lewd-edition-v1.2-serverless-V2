@@ -31,6 +31,57 @@ LOAD_IMAGE_NODE_ID = "14"
 TITLE_FIXUPS = {
     "Video Combine 馃帴馃叆馃厳馃參": "Video Combine",
 }
+PRIORITY_NODE_IDS = [
+    "16",
+    "14",
+    "13",
+    "6",
+    "59",
+    "10",
+    "11",
+    "12",
+    "1",
+    "7",
+    "124",
+    "33",
+    "34",
+]
+OUTPUT_VARIANTS = [
+    {
+        "slug_suffix": "video",
+        "format": "video/h264-mp4",
+        "notes_suffix": "H.264 MP4 output.",
+        "allowed_inputs": {
+            "frame_rate",
+            "loop_count",
+            "filename_prefix",
+            "format",
+            "pix_fmt",
+            "crf",
+            "save_metadata",
+            "trim_to_audio",
+            "pingpong",
+            "save_output",
+            "no_preview",
+            "images",
+        },
+    },
+    {
+        "slug_suffix": "gif",
+        "format": "image/gif",
+        "notes_suffix": "GIF output.",
+        "allowed_inputs": {
+            "frame_rate",
+            "loop_count",
+            "filename_prefix",
+            "format",
+            "pingpong",
+            "save_output",
+            "no_preview",
+            "images",
+        },
+    },
+]
 
 CORE_LORA_NODE_IDS = {"63", "64"}
 GROUPS = {
@@ -151,7 +202,27 @@ def normalize_meta_titles(workflow: dict) -> None:
             meta["title"] = TITLE_FIXUPS[title]
 
 
-def customize_payload(base_payload: dict, scenario: dict) -> dict:
+def reorder_workflow_nodes(workflow: dict) -> dict:
+    ordered = {}
+    for node_id in PRIORITY_NODE_IDS:
+        if node_id in workflow:
+            ordered[node_id] = workflow[node_id]
+    for node_id, node in workflow.items():
+        if node_id not in ordered:
+            ordered[node_id] = node
+    return ordered
+
+
+def normalize_output_node(workflow: dict, output_variant: dict) -> None:
+    output_node = workflow["16"]["inputs"]
+    allowed_inputs = output_variant["allowed_inputs"]
+    for key in list(output_node.keys()):
+        if key not in allowed_inputs:
+            output_node.pop(key, None)
+    output_node["format"] = output_variant["format"]
+
+
+def customize_payload(base_payload: dict, scenario: dict, output_variant: dict) -> dict:
     payload = deepcopy(base_payload)
     workflow = payload["input"]["workflow"]
 
@@ -165,8 +236,10 @@ def customize_payload(base_payload: dict, scenario: dict) -> dict:
     workflow[PROMPT_NODE_ID]["inputs"]["text"] = scenario["prompt"]
     workflow[NEGATIVE_PROMPT_NODE_ID]["inputs"]["text"] = NEGATIVE_PROMPT
     workflow[LOAD_IMAGE_NODE_ID]["inputs"]["image"] = PLACEHOLDER_IMAGE_NAME
+    normalize_output_node(workflow, output_variant)
     normalize_meta_titles(workflow)
     set_enabled_groups(workflow, scenario["groups"])
+    payload["input"]["workflow"] = reorder_workflow_nodes(workflow)
     return payload
 
 
@@ -182,12 +255,17 @@ def build_manifest() -> str:
         "2. If needed, replace `input.images[0].name` and keep the same filename in workflow node `14`.",
         "3. Replace the prompt in node `13` if you want a different scene description.",
         "",
-        "| File | Enabled feature groups | Notes |",
-        "| --- | --- | --- |",
+        "| File | Output | Enabled feature groups | Notes |",
+        "| --- | --- | --- | --- |",
     ]
     for scenario in SCENARIOS:
         groups = ", ".join(scenario["groups"]) if scenario["groups"] else "core_lightning_only"
-        lines.append(f"| `{scenario['slug']}.json` | `{groups}` | {scenario['notes']} |")
+        for output_variant in OUTPUT_VARIANTS:
+            file_name = f"{scenario['slug']}_{output_variant['slug_suffix']}.json"
+            lines.append(
+                f"| `{file_name}` | `{output_variant['slug_suffix']}` | `{groups}` | "
+                f"{scenario['notes']} {output_variant['notes_suffix']} |"
+            )
     lines.append("")
     lines.append("Core LoRAs that remain enabled in all payloads:")
     lines.append("")
@@ -202,9 +280,13 @@ def main() -> int:
     base_payload = load_source()
 
     for scenario in SCENARIOS:
-        payload = customize_payload(base_payload, scenario)
-        out_path = OUT_DIR / f"{scenario['slug']}.json"
-        out_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        for output_variant in OUTPUT_VARIANTS:
+            payload = customize_payload(base_payload, scenario, output_variant)
+            out_path = OUT_DIR / f"{scenario['slug']}_{output_variant['slug_suffix']}.json"
+            out_path.write_text(
+                json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
 
     manifest_path = OUT_DIR / "README.md"
     manifest_path.write_text(build_manifest() + "\n", encoding="utf-8")

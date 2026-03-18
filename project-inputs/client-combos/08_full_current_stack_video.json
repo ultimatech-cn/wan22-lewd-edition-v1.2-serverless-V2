@@ -7,6 +7,129 @@
       }
     ],
     "workflow": {
+      "16": {
+        "inputs": {
+          "frame_rate": 32,
+          "loop_count": 0,
+          "filename_prefix": "videos\\2026-03-10_WAN_",
+          "format": "video/h264-mp4",
+          "pix_fmt": "yuv420p",
+          "crf": 19,
+          "save_metadata": true,
+          "trim_to_audio": false,
+          "pingpong": false,
+          "save_output": true,
+          "no_preview": false,
+          "images": [
+            "33",
+            0
+          ]
+        },
+        "class_type": "VHS_VideoCombine",
+        "_meta": {
+          "title": "Video Combine"
+        }
+      },
+      "14": {
+        "inputs": {
+          "image": "client_input.png"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+          "title": "Load Image"
+        }
+      },
+      "13": {
+        "inputs": {
+          "text": "The woman is doing a happy playful dance while looking at the viewer",
+          "clip": [
+            "1",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Positive Prompt)"
+        }
+      },
+      "6": {
+        "inputs": {
+          "text": "low quality, worst quality, blurry details, jpeg artifacts, bad anatomy, deformed body, deformed face, bad hands, extra fingers, fused fingers, extra limbs, duplicate body parts, face drift, identity change, static frame, stiff motion, frame jitter, camera shake, cluttered background, crowd, upside down motion, slow motion, slow, talking",
+          "clip": [
+            "1",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Negative Prompt)"
+        }
+      },
+      "59": {
+        "inputs": {
+          "longer_side": 1280,
+          "aspect_ratio": "9:16 (Portrait)",
+          "divisible_by": 8
+        },
+        "class_type": "Resolution",
+        "_meta": {
+          "title": "Resolution (CRT)"
+        }
+      },
+      "10": {
+        "inputs": {
+          "width": [
+            "59",
+            0
+          ],
+          "height": [
+            "59",
+            1
+          ],
+          "length": 81,
+          "batch_size": 1,
+          "positive": [
+            "13",
+            0
+          ],
+          "negative": [
+            "6",
+            0
+          ],
+          "vae": [
+            "7",
+            0
+          ],
+          "start_image": [
+            "124",
+            0
+          ]
+        },
+        "class_type": "WanImageToVideo",
+        "_meta": {
+          "title": "WanImageToVideo"
+        }
+      },
+      "11": {
+        "inputs": {
+          "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+          "weight_dtype": "fp8_e4m3fn_fast"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "Load Diffusion Model"
+        }
+      },
+      "12": {
+        "inputs": {
+          "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+          "weight_dtype": "fp8_e4m3fn_fast"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "Load Diffusion Model"
+        }
+      },
       "1": {
         "inputs": {
           "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
@@ -16,6 +139,55 @@
         "class_type": "CLIPLoader",
         "_meta": {
           "title": "Load CLIP"
+        }
+      },
+      "7": {
+        "inputs": {
+          "vae_name": "wan_2.1_vae.safetensors"
+        },
+        "class_type": "VAELoader",
+        "_meta": {
+          "title": "Load VAE"
+        }
+      },
+      "124": {
+        "inputs": {
+          "any_02": [
+            "14",
+            0
+          ]
+        },
+        "class_type": "Any Switch (rgthree)",
+        "_meta": {
+          "title": "Any Switch (rgthree)"
+        }
+      },
+      "33": {
+        "inputs": {
+          "ds_factor": 1,
+          "interpolation_factor": 2,
+          "seed": 480593432630407,
+          "gimmvfi_model": [
+            "34",
+            0
+          ],
+          "images": [
+            "127",
+            0
+          ]
+        },
+        "class_type": "GIMMVFI_interpolate",
+        "_meta": {
+          "title": "GIMM-VFI Interpolate"
+        }
+      },
+      "34": {
+        "inputs": {
+          "model": "gimmvfi_r_arb_lpips_fp32.safetensors"
+        },
+        "class_type": "DownloadAndLoadGIMMVFIModel",
+        "_meta": {
+          "title": "(Down)Load GIMMVFI Model"
         }
       },
       "2": {
@@ -100,28 +272,6 @@
           "title": "VAE Decode"
         }
       },
-      "6": {
-        "inputs": {
-          "text": "low quality, worst quality, blurry details, jpeg artifacts, bad anatomy, deformed body, deformed face, bad hands, extra fingers, fused fingers, extra limbs, duplicate body parts, face drift, identity change, static frame, stiff motion, frame jitter, camera shake, cluttered background, crowd, upside down motion, slow motion, slow, talking",
-          "clip": [
-            "1",
-            0
-          ]
-        },
-        "class_type": "CLIPTextEncode",
-        "_meta": {
-          "title": "CLIP Text Encode (Negative Prompt)"
-        }
-      },
-      "7": {
-        "inputs": {
-          "vae_name": "wan_2.1_vae.safetensors"
-        },
-        "class_type": "VAELoader",
-        "_meta": {
-          "title": "Load VAE"
-        }
-      },
       "8": {
         "inputs": {
           "shift": 5,
@@ -133,105 +283,6 @@
         "class_type": "ModelSamplingSD3",
         "_meta": {
           "title": "ModelSamplingSD3"
-        }
-      },
-      "10": {
-        "inputs": {
-          "width": [
-            "59",
-            0
-          ],
-          "height": [
-            "59",
-            1
-          ],
-          "length": 81,
-          "batch_size": 1,
-          "positive": [
-            "13",
-            0
-          ],
-          "negative": [
-            "6",
-            0
-          ],
-          "vae": [
-            "7",
-            0
-          ],
-          "start_image": [
-            "124",
-            0
-          ]
-        },
-        "class_type": "WanImageToVideo",
-        "_meta": {
-          "title": "WanImageToVideo"
-        }
-      },
-      "11": {
-        "inputs": {
-          "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-          "weight_dtype": "fp8_e4m3fn_fast"
-        },
-        "class_type": "UNETLoader",
-        "_meta": {
-          "title": "Load Diffusion Model"
-        }
-      },
-      "12": {
-        "inputs": {
-          "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-          "weight_dtype": "fp8_e4m3fn_fast"
-        },
-        "class_type": "UNETLoader",
-        "_meta": {
-          "title": "Load Diffusion Model"
-        }
-      },
-      "13": {
-        "inputs": {
-          "text": "The woman is performing a deepthroat blowjob motion while looking at the viewer",
-          "clip": [
-            "1",
-            0
-          ]
-        },
-        "class_type": "CLIPTextEncode",
-        "_meta": {
-          "title": "CLIP Text Encode (Positive Prompt)"
-        }
-      },
-      "14": {
-        "inputs": {
-          "image": "client_input.png"
-        },
-        "class_type": "LoadImage",
-        "_meta": {
-          "title": "Load Image"
-        }
-      },
-      "16": {
-        "inputs": {
-          "frame_rate": 32,
-          "loop_count": 0,
-          "filename_prefix": "videos\\2026-03-10_WAN_",
-          "format": "video/h264-mp4",
-          "pix_fmt": "yuv420p",
-          "crf": 19,
-          "save_metadata": true,
-          "trim_to_audio": false,
-          "pingpong": false,
-          "save_output": true,
-          "no_preview": false,
-          "images": [
-            "33",
-            0
-          ]
-        },
-        "class_type": "VHS_VideoCombine",
-        "_meta": {
-          "title": "Video Combine"
         }
       },
       "21": {
@@ -246,34 +297,6 @@
         "class_type": "PathchSageAttentionKJ",
         "_meta": {
           "title": "Patch Sage Attention KJ"
-        }
-      },
-      "33": {
-        "inputs": {
-          "ds_factor": 1,
-          "interpolation_factor": 2,
-          "seed": 480593432630407,
-          "gimmvfi_model": [
-            "34",
-            0
-          ],
-          "images": [
-            "127",
-            0
-          ]
-        },
-        "class_type": "GIMMVFI_interpolate",
-        "_meta": {
-          "title": "GIMM-VFI Interpolate"
-        }
-      },
-      "34": {
-        "inputs": {
-          "model": "gimmvfi_r_arb_lpips_fp32.safetensors"
-        },
-        "class_type": "DownloadAndLoadGIMMVFIModel",
-        "_meta": {
-          "title": "(Down)Load GIMMVFI Model"
         }
       },
       "40": {
@@ -348,17 +371,6 @@
           "title": "ModelSamplingSD3"
         }
       },
-      "59": {
-        "inputs": {
-          "longer_side": 1280,
-          "aspect_ratio": "9:16 (Portrait)",
-          "divisible_by": 8
-        },
-        "class_type": "Resolution",
-        "_meta": {
-          "title": "Resolution (CRT)"
-        }
-      },
       "63": {
         "inputs": {
           "lora_name": "WAN/Wan_2_2_I2V_A14B_HIGH_lightx2v_MoE_distill_lora_rank_64_bf16.safetensors",
@@ -417,7 +429,7 @@
       "68": {
         "inputs": {
           "lora_name": "WAN/BounceHighWan2_2.safetensors",
-          "strength_model": 0,
+          "strength_model": 0.3,
           "model": [
             "73",
             0
@@ -431,7 +443,7 @@
       "69": {
         "inputs": {
           "lora_name": "WAN/slop_twerk_HighNoise_merged3_7_v2.safetensors",
-          "strength_model": 0,
+          "strength_model": 0.2,
           "model": [
             "68",
             0
@@ -445,7 +457,7 @@
       "70": {
         "inputs": {
           "lora_name": "WAN/BounceLowWan2_2.safetensors",
-          "strength_model": 0,
+          "strength_model": 0.5,
           "model": [
             "74",
             0
@@ -459,7 +471,7 @@
       "71": {
         "inputs": {
           "lora_name": "WAN/slop_twerk_LowNoise_merged3_7_v2.safetensors",
-          "strength_model": 0,
+          "strength_model": 0.3,
           "model": [
             "70",
             0
@@ -473,7 +485,7 @@
       "73": {
         "inputs": {
           "lora_name": "WAN/Wan22-I2V-HIGH-Hip_Slammin_Assertive_Cowgirl.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "98",
             0
@@ -487,7 +499,7 @@
       "74": {
         "inputs": {
           "lora_name": "WAN/Wan22-I2V-LOW-Hip_Slammin_Assertive_Cowgirl.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "99",
             0
@@ -501,7 +513,7 @@
       "75": {
         "inputs": {
           "lora_name": "WAN/DR34ML4Y_I2V_14B_HIGH.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "63",
             0
@@ -515,7 +527,7 @@
       "76": {
         "inputs": {
           "lora_name": "WAN/DR34ML4Y_I2V_14B_LOW.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "64",
             0
@@ -529,7 +541,7 @@
       "78": {
         "inputs": {
           "lora_name": "WAN/DR34ML4Y_I2V_14B_HIGH.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "11",
             0
@@ -543,7 +555,7 @@
       "79": {
         "inputs": {
           "lora_name": "WAN/Wan22-I2V-HIGH-Hip_Slammin_Assertive_Cowgirl.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "97",
             0
@@ -557,7 +569,7 @@
       "80": {
         "inputs": {
           "lora_name": "WAN/BounceHighWan2_2.safetensors",
-          "strength_model": 0,
+          "strength_model": 0.3,
           "model": [
             "79",
             0
@@ -571,7 +583,7 @@
       "81": {
         "inputs": {
           "lora_name": "WAN/slop_twerk_HighNoise_merged3_7_v2.safetensors",
-          "strength_model": 0,
+          "strength_model": 0.2,
           "model": [
             "80",
             0
@@ -660,18 +672,6 @@
           "title": "Load LoRA"
         }
       },
-      "124": {
-        "inputs": {
-          "any_02": [
-            "14",
-            0
-          ]
-        },
-        "class_type": "Any Switch (rgthree)",
-        "_meta": {
-          "title": "Any Switch (rgthree)"
-        }
-      },
       "127": {
         "inputs": {
           "method": "mkl",
@@ -694,7 +694,7 @@
       "135": {
         "inputs": {
           "lora_name": "WAN/wan_fingering_pussy_i2v2.2hi_v10.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "78",
             0
@@ -708,7 +708,7 @@
       "136": {
         "inputs": {
           "lora_name": "WAN/wan_fingering_pussy_i2v2.2hi_v10.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "75",
             0
@@ -722,7 +722,7 @@
       "137": {
         "inputs": {
           "lora_name": "WAN/wan_fingering_pussy_i2v2.2lo_v10.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "76",
             0
@@ -736,7 +736,7 @@
       "138": {
         "inputs": {
           "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - HIGH 14B.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "135",
             0
@@ -750,7 +750,7 @@
       "139": {
         "inputs": {
           "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - HIGH 14B.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "136",
             0
@@ -764,7 +764,7 @@
       "140": {
         "inputs": {
           "lora_name": "WAN/Wan2.2 - I2V - Gyrating Hips - LOW 14B.safetensors",
-          "strength_model": 0,
+          "strength_model": 1,
           "model": [
             "137",
             0
